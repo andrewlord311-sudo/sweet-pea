@@ -499,7 +499,7 @@ sYears.addEventListener("input", () => { const n = +sYears.value;
 
 // ======================================================================== "Where were we?"
 const PLACES = [
-  {file:"photos/chicheley.jpg", answer:"Chicheley Hall", line:"Chicheley Hall: such a romantic day 💕"},
+  {file:"photos/chicheley.jpg", pos:"50% 42%", answer:"Chicheley Hall", line:"Chicheley Hall: such a romantic day 💕"},
   {file:"photos/nowton.jpg", answer:"Nowton Park", line:"Nowton Park, near Bury St Edmunds 🌳"},
   {file:"photos/woottens.jpg", answer:"Woottens of Wenhaston", line:"Woottens of Wenhaston, all those pelargoniums 🌺"},
 ];
@@ -508,7 +508,7 @@ const DECOYS = ["Kew Gardens","Sissinghurst","RHS Wisley","Beth Chatto's"];
   const q = document.getElementById("quiz"); let solved = 0;
   PLACES.forEach((p, i) => {
     const wrap = document.createElement("div"); wrap.style.margin = i ? "14px 0 0" : "4px 0 0";
-    wrap.innerHTML = `<div class="photo"><div class="ph">Memory ${i + 1}</div><img alt="" src="${p.file}"><div class="cap">${p.line}</div></div>
+    wrap.innerHTML = `<div class="photo"><div class="ph">Memory ${i + 1}</div><img alt="" src="${p.file}" style="object-position:${p.pos || "50% 50%"}"><div class="cap">${p.line}</div></div>
       <input type="range" min="0" max="100" value="0" aria-label="Bring memory ${i + 1} into focus"><div class="opts"></div>`;
     q.appendChild(wrap);
     const img = wrap.querySelector("img"), r = wrap.querySelector("input"), opts = wrap.querySelector(".opts"), ph = wrap.querySelector(".ph");
