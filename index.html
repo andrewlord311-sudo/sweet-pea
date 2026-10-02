@@ -671,7 +671,8 @@ function startFinale(){
 }
 addEventListener("resize", () => { if (cv.style.display === "block") sizeCanvas(); });
 // ?finale in the address shows the ending straight away (for testing)
-if (/finale/.test(location.search)) addEventListener("load", () => { document.getElementById("intro").classList.add("gone"); setTimeout(startFinale, 300); });
+// (it still waits for the "Step into the garden" tap, because phones only play music that starts from a tap)
+if (/finale/.test(location.search)) document.getElementById("begin").addEventListener("click", () => { finaleDone = true; setTimeout(startFinale, 600); });
 </script>
 </body>
 </html>
