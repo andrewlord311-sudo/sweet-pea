@@ -41,9 +41,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 #scene{position:sticky;top:0;z-index:5;height:54svh;min-height:330px;max-height:620px;overflow:hidden;
   border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:0 10px 30px rgba(90,50,70,.18)}
 #garden{width:100%;height:100%;display:block}
-#title{position:absolute;left:0;right:56px;top:10px;text-align:center;pointer-events:none}
-#title .script{font-size:clamp(30px,9vw,44px);color:var(--plum);text-shadow:0 1px 0 rgba(255,255,255,.8)}
-#title small{display:block;font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);margin-top:-4px}
+#title{position:absolute;left:0;right:56px;top:8px;display:flex;justify-content:center;pointer-events:none}
+#title .in{padding:4px 26px 8px;border-radius:999px;text-align:center;background:radial-gradient(ellipse at 50% 50%,rgba(255,250,244,.92) 0%,rgba(255,250,244,.78) 55%,rgba(255,250,244,0) 78%)}
+#title .script{font-size:clamp(30px,9vw,44px);color:#6a2a5a;text-shadow:0 0 6px #fff,0 0 12px #fff,0 0 2px #fff}
+#title small{display:block;font-size:14px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#6e5462;margin-top:-4px;text-shadow:0 0 5px #fff,0 0 10px #fff}
 
 /* love-o-meter */
 #meter{position:absolute;right:12px;top:14px;bottom:16px;width:40px;display:flex;flex-direction:column;align-items:center;pointer-events:none}
@@ -129,7 +130,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bor
 <main id="app">
   <section id="scene">
     <svg id="garden" viewBox="0 0 400 480" preserveAspectRatio="xMidYMax slice" aria-label="A sweet pea garden"></svg>
-    <div id="title"><div class="script">Laura's Garden</div><small>six years of us</small></div>
+    <div id="title"><div class="in"><div class="script">Laura's Garden</div><small>six years of us</small></div></div>
     <div id="meter"><div class="lbl">love-o-meter</div><div id="tube"><div id="fill"></div></div><div id="bulb">0%</div></div>
     <div id="toast"></div>
   </section>
