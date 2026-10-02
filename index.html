@@ -569,19 +569,42 @@ setSun(0); renderGarden();
 const music = document.getElementById("music"); let musicReady = false;
 document.getElementById("begin").addEventListener("click", () => {
   document.getElementById("intro").classList.add("gone");
-  // Unlock the music on this first tap: phones only let sound start from a touch, and an iPhone remembers the permission
-  // for this audio element once it has really played (an unmuted play, paused at once, so nothing is heard).
-  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch(e){}
-  const pr = music.play(); if (pr) pr.then(() => { music.pause(); music.currentTime = 0; musicReady = true; }).catch(() => {});
-  else { music.pause(); musicReady = true; }
+  unlockAudio();
 });
-let musicStarted = false;
-function playMusic(){ if (musicStarted) return; musicStarted = true;
-  try { music.currentTime = 0; const p = music.play(); if (p) p.catch(() => { musicStarted = false; }); } catch(e){ musicStarted = false; } }
+// ---- music. Phones only allow sound that starts from a tap. The reliable way on an iPhone: on the first tap, switch on a
+// Web Audio context (it then stays on), play a moment of silence through it, and load + decode the whole song into memory;
+// the ending can then start it at any time. The <audio> element is kept as a fallback.
+let actx = null, songBuf = null, songSrc = null, musicStarted = false;
+const dbg = /debug/.test(location.search) ? (m => { const d = document.getElementById("dbg") || Object.assign(document.body.appendChild(document.createElement("pre")), {id:"dbg"});
+  Object.assign(d.style, {position:"fixed", left:"4px", bottom:"4px", zIndex:99, background:"#fff", font:"11px monospace", maxWidth:"96vw", whiteSpace:"pre-wrap", margin:0, padding:"4px", opacity:.9});
+  d.textContent += m + "\n"; }) : () => {};
+function unlockAudio(){
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch(e){}
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; actx = new AC();
+    const b = actx.createBuffer(1, 1, 22050), src = actx.createBufferSource(); src.buffer = b; src.connect(actx.destination); src.start(0);
+    if (actx.resume) actx.resume().then(() => dbg("context " + actx.state)).catch(e => dbg("resume failed " + e));
+    fetch("music.mp3").then(r => r.arrayBuffer()).then(ab => new Promise((ok, no) => { const p = actx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); }))
+      .then(buf => { songBuf = buf; dbg("song decoded " + buf.duration.toFixed(0) + "s"); }).catch(e => dbg("decode failed " + e));
+  } catch(e){ dbg("no web audio " + e); }
+  // fallback: a real (unmuted) play of the element, paused at once, so the element is allowed to play later too
+  try { const p = music.play(); if (p) p.then(() => { music.pause(); music.currentTime = 0; dbg("element unlocked"); }).catch(e => dbg("element blocked " + e)); } catch(e){}
+}
+function playMusic(){
+  if (musicStarted) return; musicStarted = true;
+  if (actx && songBuf){
+    try { if (actx.state !== "running") actx.resume();
+      const g = actx.createGain(); g.gain.setValueAtTime(0.0001, actx.currentTime); g.gain.exponentialRampToValueAtTime(1, actx.currentTime + 2.5); g.connect(actx.destination);
+      songSrc = actx.createBufferSource(); songSrc.buffer = songBuf; songSrc.connect(g); songSrc.start(0); dbg("playing (web audio)"); return; } catch(e){ dbg("web audio play failed " + e); }
+  }
+  try { music.currentTime = 0; const p = music.play(); if (p) p.then(() => dbg("playing (element)")).catch(e => { musicStarted = false; dbg("element play failed " + e); }); } catch(e){ musicStarted = false; }
+}
+function musicPaused(){ return songSrc ? actx.state !== "running" : music.paused; }
+function toggleMusic(){ if (songSrc){ if (actx.state === "running") actx.suspend(); else actx.resume(); } else if (music.paused) music.play(); else music.pause(); }
 // if a phone still refused, the next touch anywhere on the ending starts it
-addEventListener("pointerdown", () => { if (finaleDone && music.paused && !musicStarted) playMusic(); });
+addEventListener("pointerdown", () => { if (finaleDone && !musicStarted) playMusic(); });
 const musicBtn = document.getElementById("musicBtn");
-musicBtn.onclick = () => { if (music.paused){ music.play(); musicBtn.textContent = "♫ Pause music"; } else { music.pause(); musicBtn.textContent = "♫ Play music"; } };
+musicBtn.onclick = () => { if (!musicStarted){ playMusic(); musicBtn.textContent = "♫ Pause music"; return; } const wasPaused = musicPaused(); toggleMusic(); musicBtn.textContent = wasPaused ? "♫ Pause music" : "♫ Play music"; };
 document.getElementById("again").onclick = () => location.reload();
 
 // ======================================================================== THE FINALE: flowers everywhere, then I LOVE YOU in petals
