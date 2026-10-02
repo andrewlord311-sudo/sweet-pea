@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>For Laura 🌸</title>
+<meta name="description" content="A little garden for you. Happy anniversary.">
+<meta property="og:title" content="For Laura 🌸">
+<meta property="og:description" content="A little garden for you.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f7e6ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fffaf3; --paper:#fbf3ea; --ink:#4a3540; --soft:#8a6f7c; --sage:#7f9b7a; --leaf:#5e8a5a; --deep:#3f6b45;
+  --pink:#f29ab9; --rose:#de5fa9; --lilac:#c3a6e6; --plum:#7d3c6b; --gold:#e9b85c;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;overscroll-behavior:none}
+body{min-height:100svh}
+/* paper grain over everything */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .4 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.script{font-family:"Great Vibes",cursive;font-weight:400}
+
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:radial-gradient(ellipse at 50% 35%,#fff6ef 0%,#fbe3ea 55%,#efd3e4 100%);transition:opacity 1.2s ease, visibility 1.2s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .to{font-size:20px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft)}
+#intro h1{margin:.05em 0 0;font-size:min(30vw,128px);line-height:1;color:var(--plum);text-shadow:0 2px 0 #fff}
+#intro p{font-size:22px;max-width:22em;margin:.6em auto 1.4em;color:var(--ink);font-style:italic}
+#intro .spray{width:min(70vw,280px);height:auto;margin-bottom:8px}
+.btn{font:600 19px/1 "Cormorant Garamond",serif;letter-spacing:.08em;color:#fff;background:linear-gradient(180deg,#e77fae,#c84d8c);border:0;border-radius:999px;
+  padding:16px 30px;box-shadow:0 6px 18px rgba(200,77,140,.35), inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer}
+.btn:active{transform:translateY(1px)}
+
+/* ---------- the garden ---------- */
+#scene{position:sticky;top:0;z-index:5;height:54svh;min-height:330px;max-height:620px;overflow:hidden;
+  border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:0 10px 30px rgba(90,50,70,.18)}
+#garden{width:100%;height:100%;display:block}
+#title{position:absolute;left:0;right:56px;top:10px;text-align:center;pointer-events:none}
+#title .script{font-size:clamp(30px,9vw,44px);color:var(--plum);text-shadow:0 1px 0 rgba(255,255,255,.8)}
+#title small{display:block;font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);margin-top:-4px}
+
+/* love-o-meter */
+#meter{position:absolute;right:12px;top:14px;bottom:16px;width:40px;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+#meter .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--plum);writing-mode:vertical-rl;transform:rotate(180deg);margin-bottom:6px;opacity:.85}
+#tube{position:relative;flex:1;width:22px;border-radius:12px;background:rgba(255,255,255,.55);border:2px solid rgba(255,255,255,.95);
+  box-shadow:inset 0 0 8px rgba(125,60,107,.25),0 2px 10px rgba(125,60,107,.2);overflow:hidden}
+#fill{position:absolute;left:0;right:0;bottom:0;height:0%;background:linear-gradient(0deg,#c2457a,#f29ab9 70%,#fbd3e0);transition:height 1.1s cubic-bezier(.2,.9,.25,1.2)}
+#fill::after{content:"";position:absolute;left:3px;top:4px;bottom:4px;width:4px;border-radius:4px;background:rgba(255,255,255,.55)}
+#bulb{width:40px;height:40px;margin-top:-6px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 "Cormorant Garamond",serif;color:#fff;
+  background:radial-gradient(circle at 35% 30%,#ffd1e3,#d4507f 60%,#9b1f5b);box-shadow:0 3px 10px rgba(155,31,91,.35)}
+#meter.pulse #bulb{animation:pulse .6s ease}
+@keyframes pulse{50%{transform:scale(1.18)}}
+#toast{position:absolute;left:46%;top:78px;transform:translate(-50%,20px);opacity:0;background:rgba(255,250,243,.94);color:var(--plum);
+  font:500 17px/1.25 "Cormorant Garamond",serif;padding:9px 16px;border-radius:16px;box-shadow:0 4px 16px rgba(90,50,70,.18);max-width:78%;text-align:center;
+  transition:all .5s ease;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* svg life */
+.bloom{transform-box:fill-box;transform-origin:50% 90%;transition:transform .9s cubic-bezier(.3,1.6,.5,1),opacity .6s}
+.sway{animation:sway 5s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+.pop{transform-box:fill-box;transform-origin:50% 100%;transition:transform .8s cubic-bezier(.3,1.6,.5,1),opacity .6s}
+.hop{animation:hop 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes hop{0%,60%,100%{transform:translateY(0)}75%{transform:translateY(-14px) scaleY(1.05)}}
+
+/* ---------- tasks ---------- */
+#tasks{padding:18px 16px 60px;max-width:560px;margin:0 auto}
+.intro-line{text-align:center;font-size:19px;font-style:italic;color:var(--soft);margin:6px 8px 16px}
+.card{background:var(--cream);border-radius:22px;padding:16px 18px 14px;margin:0 0 14px;box-shadow:0 3px 14px rgba(90,50,70,.10);border:1px solid #f1e3e6;position:relative}
+.card h3{margin:0;font-size:23px;font-weight:600;color:var(--plum);display:flex;align-items:center;gap:10px}
+.card h3 .ic{font-size:24px}
+.card .hint{margin:2px 0 6px;font-size:16px;font-style:italic;color:var(--soft)}
+.card .msg{min-height:1.3em;font-size:18px;color:var(--ink);margin-top:2px;transition:color .3s}
+.card.done{border-color:#e8b9cf;background:linear-gradient(180deg,#fff9f6,#fdf0f4)}
+.card .tick{position:absolute;right:16px;top:14px;font-size:22px;opacity:0;transform:scale(.4);transition:all .5s cubic-bezier(.3,1.7,.5,1)}
+.card.done .tick{opacity:1;transform:scale(1)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:4px 0 0;touch-action:pan-y}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:10px;background:linear-gradient(90deg,#d9e7d2,#a9c79f);box-shadow:inset 0 1px 2px rgba(0,0,0,.12)}
+input[type=range]::-moz-range-track{height:10px;border-radius:10px;background:linear-gradient(90deg,#d9e7d2,#a9c79f)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;margin-top:-12px;border-radius:50%;border:3px solid #fff;
+  background:radial-gradient(circle at 35% 30%,#ffd6e6,#e46fa3 60%,#b23a78);box-shadow:0 3px 10px rgba(178,58,120,.4)}
+input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;border:3px solid #fff;background:radial-gradient(circle at 35% 30%,#ffd6e6,#e46fa3 60%,#b23a78)}
+.ends{display:flex;justify-content:space-between;font-size:14px;color:var(--soft);margin-top:-4px}
+
+/* photo guessing */
+.photo{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#e8d5dd,#d6e4d3);margin:6px 0 4px}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;filter:blur(16px) saturate(1.1);transform:scale(1.08);transition:filter .2s linear}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;color:#fff;font:600 19px/1.2 "Cormorant Garamond",serif;
+  background:linear-gradient(0deg,rgba(60,20,45,.7),rgba(60,20,45,0));opacity:0;transform:translateY(10px);transition:all .6s}
+.photo.solved .cap{opacity:1;transform:none}
+.photo .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-style:italic;font-size:17px;text-align:center;padding:20px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;max-height:0;overflow:hidden;opacity:0;transition:all .6s ease}
+.opts.open{max-height:200px;opacity:1}
+.opts button{font:500 17px/1.15 "Cormorant Garamond",serif;color:var(--plum);background:#fff;border:1.5px solid #e9c6d6;border-radius:14px;padding:10px 8px;cursor:pointer}
+.opts button.right{background:#fbe0ec;border-color:#d4507f;font-weight:700}
+.opts button.wrong{animation:wob .45s}
+@keyframes wob{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ---------- finale ---------- */
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:30;pointer-events:none;display:none}
+#finale{position:fixed;inset:0;z-index:31;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 20px calc(28px + env(safe-area-inset-bottom));text-align:center;pointer-events:none}
+#finale .note{padding:34px 26px 10px;border-radius:40px;background:radial-gradient(ellipse at 50% 55%,rgba(255,249,244,.95) 45%,rgba(255,249,244,0) 72%)}
+#finale .msg{font-size:clamp(34px,10vw,64px);white-space:nowrap;color:var(--plum);opacity:0;transform:translateY(16px);transition:all 2s ease;text-shadow:0 2px 12px #fff,0 0 2px #fff}
+#finale .sub{font-size:17px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);opacity:0;transition:opacity 2s ease 1s;text-shadow:0 1px 8px #fff}
+#finale .row{display:flex;gap:10px;margin-top:10px;opacity:0;transition:opacity 1.5s ease 1.6s;pointer-events:auto}
+#finale.on{display:flex}
+#finale.text .msg{opacity:1;transform:none}
+#finale.text .sub,#finale.text .row{opacity:1}
+#finale .row .btn{font-size:16px;padding:13px 18px;white-space:nowrap}
+.btn.ghost{background:rgba(255,255,255,.85);color:var(--plum);box-shadow:0 4px 14px rgba(125,60,107,.2)}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <svg class="spray" viewBox="0 0 280 120" aria-hidden="true" id="introSpray"></svg>
+  <div class="to">for</div>
+  <h1 class="script">Laura</h1>
+  <p>Six years together.<br>I've planted a little garden for you.<br>Help it grow.</p>
+  <button class="btn" id="begin">Step into the garden</button>
+</div>
+
+<main id="app">
+  <section id="scene">
+    <svg id="garden" viewBox="0 0 400 480" preserveAspectRatio="xMidYMax slice" aria-label="A sweet pea garden"></svg>
+    <div id="title"><div class="script">Laura's Garden</div><small>six years of us</small></div>
+    <div id="meter"><div class="lbl">love-o-meter</div><div id="tube"><div id="fill"></div></div><div id="bulb">0%</div></div>
+    <div id="toast"></div>
+  </section>
+
+  <section id="tasks">
+    <p class="intro-line">Slide each one just right, and watch the love-o-meter fill&nbsp;up&nbsp;♡</p>
+
+    <div class="card" id="c-water"><span class="tick">💗</span>
+      <h3><span class="ic">💧</span>Water the sweet peas</h3>
+      <div class="hint">Not too little, not too much…</div>
+      <input type="range" id="s-water" min="0" max="100" value="0" aria-label="Water">
+      <div class="ends"><span>dry</span><span>soggy</span></div>
+      <div class="msg"></div>
+    </div>
+
+    <div class="card" id="c-sun"><span class="tick">💗</span>
+      <h3><span class="ic">☀️</span>Bring out the sun</h3>
+      <div class="hint">Sweet peas love a sunny morning</div>
+      <input type="range" id="s-sun" min="0" max="100" value="0" aria-label="Sun">
+      <div class="ends"><span>dawn</span><span>midnight</span></div>
+      <div class="msg"></div>
+    </div>
+
+    <div class="card" id="c-bees"><span class="tick">💗</span>
+      <h3><span class="ic">🐝</span>Invite the bees &amp; butterflies</h3>
+      <div class="hint">Just enough visitors to make it hum</div>
+      <input type="range" id="s-bees" min="0" max="100" value="0" aria-label="Bees and butterflies">
+      <div class="ends"><span>none</span><span>a swarm!</span></div>
+      <div class="msg"></div>
+    </div>
+
+    <div class="card" id="c-posy"><span class="tick">💗</span>
+      <h3><span class="ic">💐</span>Pick a posy</h3>
+      <div class="hint">The more you pick sweet peas, the more they bloom</div>
+      <input type="range" id="s-posy" min="0" max="100" value="0" aria-label="Pick a posy">
+      <div class="ends"><span>none</span><span>armfuls</span></div>
+      <div class="msg"></div>
+    </div>
+
+    <div class="card" id="c-years"><span class="tick">💗</span>
+      <h3><span class="ic">🪴</span>Our six years</h3>
+      <div class="hint">Lay a stepping stone for every year</div>
+      <input type="range" id="s-years" min="0" max="6" step="1" value="0" aria-label="Years together">
+      <div class="ends"><span>2020</span><span>2026</span></div>
+      <div class="msg"></div>
+    </div>
+
+    <div class="card" id="c-photos"><span class="tick">💗</span>
+      <h3><span class="ic">📷</span>Where were we?</h3>
+      <div class="hint">Gardens we've loved. Slide to bring each memory into focus, then guess</div>
+      <div id="quiz"></div>
+    </div>
+  </section>
+</main>
+
+<canvas id="fx"></canvas>
+<div id="finale">
+  <div class="note"><div class="msg script">I love you, my sweet pea</div>
+  <div class="sub">Happy 6th anniversary, Laura</div></div>
+  <div class="row"><button class="btn ghost" id="musicBtn">♫ Pause music</button><button class="btn" id="again">Grow it again</button></div>
+</div>
+<audio id="music" src="music.mp3" preload="auto"></audio>
+
+<script>
+"use strict";
+// ======================================================================== palettes & the sweet pea
+const PAL = [ // light, mid, dark
+  ["#fde3ec","#f29ab9","#c2457a"],   // pink
+  ["#efe4fa","#c3a6e6","#7d58b5"],   // lilac
+  ["#fbd3ea","#de5fa9","#9b1f6b"],   // magenta
+  ["#fffaf0","#f7e6cf","#d9b98f"],   // cream
+  ["#f3c4d0","#b34864","#6e1f36"],   // burgundy
+  ["#ffffff","#fbe4ee","#e07aa6"],   // white with a pink picotee edge
+  ["#fde7df","#f4a99a","#d06a5a"],   // salmon
+];
+// sweet pea parts, drawn around (0,0) with the flower ~40 units tall: a big upright "standard" petal with a ruffled edge,
+// two "wing" petals in front, the small "keel", and a green calyx. The same strings work in SVG and in canvas Path2D.
+const STANDARD = "M0 6 C-10 7 -21 1 -22 -9 C-23 -16 -18 -21 -13 -20 C-12 -26 -6 -29 -1 -27 C1 -30 8 -29 11 -25 C17 -26 23 -20 22 -12 C22 -2 11 6 0 6Z";
+const WING_L = "M-1 3 C-8 1 -15 5 -15 11 C-15 16 -9 17 -4 14 C-1 12 0 7 -1 3Z";
+const WING_R = "M1 3 C8 1 15 5 15 11 C15 16 9 17 4 14 C1 12 0 7 1 3Z";
+const KEEL   = "M-3 8 C-4 14 -1 19 2 18 C4 16 4 11 2 8Z";
+const CALYX  = "M-4 14 L0 24 L4 14 C2 17 -2 17 -4 14Z";
+const VEIN   = "M0 4 C-2 -6 -2 -14 -1 -22 M-6 2 C-11 -6 -13 -12 -14 -16 M6 2 C11 -6 13 -12 14 -16";
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function mixHex(a, b, t){ const p = h => [1,3,5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b);
+  return "#" + A.map((v, i) => Math.round(lerp(v, B[i], t)).toString(16).padStart(2, "0")).join(""); }
+
+function svgBloom(parent, x, y, s, rot, pi, cls = "bloom"){
+  const g = el("g", {transform:`translate(${x} ${y}) rotate(${rot}) scale(${s})`}, parent);
+  const inner = el("g", {class: cls}, g);
+  el("path", {d: CALYX, fill: "#6f9a5e"}, inner);
+  el("path", {d: STANDARD, fill: `url(#gS${pi})`, stroke: PAL[pi][2], "stroke-width": .9, "stroke-opacity": .55}, inner);
+  el("path", {d: VEIN, fill: "none", stroke: PAL[pi][2], "stroke-width": .5, "stroke-opacity": .12}, inner);
+  el("path", {d: WING_L, fill: `url(#gW${pi})`, stroke: PAL[pi][2], "stroke-width": .7, "stroke-opacity": .5}, inner);
+  el("path", {d: WING_R, fill: `url(#gW${pi})`, stroke: PAL[pi][2], "stroke-width": .7, "stroke-opacity": .5}, inner);
+  el("path", {d: KEEL, fill: PAL[pi][0], stroke: PAL[pi][2], "stroke-width": .6, "stroke-opacity": .45}, inner);
+  return inner;
+}
+function bloomGradients(defs){
+  PAL.forEach((p, i) => {
+    const s = el("radialGradient", {id:`gS${i}`, cx:"50%", cy:"85%", r:"85%"}, defs);
+    el("stop", {offset:"0%", "stop-color": p[0]}, s); el("stop", {offset:"55%", "stop-color": p[1]}, s); el("stop", {offset:"100%", "stop-color": p[2]}, s);
+    const w = el("radialGradient", {id:`gW${i}`, cx:"50%", cy:"20%", r:"90%"}, defs);
+    el("stop", {offset:"0%", "stop-color": p[0]}, w); el("stop", {offset:"100%", "stop-color": p[1]}, w);
+  });
+}
+
+// ======================================================================== the intro spray
+(function(){
+  const svg = document.getElementById("introSpray"), defs = el("defs", {}, svg); bloomGradients(defs);
+  el("path", {d:"M20 100 C70 70 110 95 140 70 C170 45 210 70 260 40", fill:"none", stroke:"#6f9a5e", "stroke-width":2.2, "stroke-linecap":"round"}, svg);
+  el("path", {d:"M95 86 c6 -10 16 -8 14 0 c-2 6 -9 4 -6 -1", fill:"none", stroke:"#6f9a5e", "stroke-width":1.4}, svg);
+  el("path", {d:"M205 60 c4 -12 16 -10 14 -1 c-2 6 -9 3 -6 -2", fill:"none", stroke:"#6f9a5e", "stroke-width":1.4}, svg);
+  [[45,82,0.9,-20,0],[140,62,1.15,5,2],[230,40,0.95,18,1],[100,90,0.7,-8,5],[185,58,0.75,12,4]].forEach(([x,y,s,r,p]) => svgBloom(svg, x, y, s, r, p, ""));
+})();
+
+// ======================================================================== the garden scene
+const svg = document.getElementById("garden");
+const defs = el("defs", {}, svg);
+bloomGradients(defs);
+defs.insertAdjacentHTML("beforeend", `
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="sk0" offset="0%" stop-color="#f6d7e0"/><stop id="sk1" offset="70%" stop-color="#fff0df"/></linearGradient>
+  <radialGradient id="sunGlow"><stop offset="0%" stop-color="#fff6d6"/><stop offset="35%" stop-color="#ffe39a" stop-opacity=".9"/><stop offset="100%" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="moonGlow"><stop offset="0%" stop-color="#fffbe8"/><stop offset="40%" stop-color="#f3efd8" stop-opacity=".7"/><stop offset="100%" stop-color="#cfd8ff" stop-opacity="0"/></radialGradient>
+  <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1"><stop id="so0" offset="0%" stop-color="#a87a58"/><stop id="so1" offset="100%" stop-color="#7e5638"/></linearGradient>
+  <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a9c79f"/><stop offset="100%" stop-color="#7fa476"/></linearGradient>
+  <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#b79a7e"/><stop offset="100%" stop-color="#9c7d63"/></linearGradient>
+  <radialGradient id="puddle"><stop offset="0%" stop-color="#cfe6f3"/><stop offset="100%" stop-color="#8fb9d3"/></radialGradient>
+  <filter id="wc" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>`);
+
+const L = {}; ["sky","stars","sunL","moonL","hills","trellis","vines","leaves","blooms","soil","front","stones","sign","puddleL","can","wreath","insects","basket","birds"].forEach(n => L[n] = el("g", {id:"L-"+n}, svg));
+el("rect", {x:-200, y:-50, width:800, height:600, fill:"url(#sky)"}, L.sky);
+// stars (night)
+for (let i = 0; i < 40; i++) el("circle", {cx: rnd(-100, 500), cy: rnd(0, 220), r: rnd(.5, 1.6), fill: "#fffbe6"}, L.stars);
+L.stars.style.opacity = 0;
+// sun & moon
+const sun = el("g", {}, L.sunL); el("circle", {r:62, fill:"url(#sunGlow)"}, sun); el("circle", {r:18, fill:"#ffe9a6"}, sun);
+const moon = el("g", {}, L.moonL); el("circle", {r:55, fill:"url(#moonGlow)"}, moon); el("circle", {r:14, fill:"#fffbe8"}, moon); el("circle", {cx:6, cy:-4, r:12, fill:"#2c3157", opacity:.0, id:"moonBite"}, moon);
+L.moonL.style.opacity = 0;
+// hills (watercolour edges)
+el("path", {d:"M-200 300 C-100 250 0 270 80 250 C170 228 260 262 340 240 C420 220 520 250 600 240 L600 480 L-200 480Z", fill:"#c9d8c0", filter:"url(#wc)", opacity:.9}, L.hills);
+el("path", {d:"M-200 330 C-60 300 40 320 140 300 C240 282 330 312 420 296 C500 284 560 300 600 296 L600 480 L-200 480Z", fill:"#b3c9a8", filter:"url(#wc)"}, L.hills);
+// a few soft trees far away
+[[30,292,26],[66,284,18],[352,280,22],[322,290,15]].forEach(([x,y,r]) => { el("rect",{x:x-2,y:y,width:4,height:16,fill:"#8a7a66"},L.hills); el("circle",{cx:x,cy:y-4,r,fill:"#9ab88f",filter:"url(#wc)"},L.hills); });
+// trellis
+const TX0 = 112, TX1 = 288, TY0 = 118, TY1 = 382;
+(function(){
+  const g = el("g", {stroke:"#a88c72", "stroke-width":3, "stroke-linecap":"round", opacity:.92}, L.trellis);
+  for (let k = -6; k <= 6; k++){ const x = 200 + k * 30; el("line", {x1:x - 70, y1:TY1, x2:x + 70, y2:TY0}, g); el("line", {x1:x + 70, y1:TY1, x2:x - 70, y2:TY0}, g); }
+  const clip = el("clipPath", {id:"tclip"}, defs); el("rect", {x:TX0, y:TY0, width:TX1 - TX0, height:TY1 - TY0}, clip);
+  g.setAttribute("clip-path", "url(#tclip)");
+  el("rect", {x:TX0 - 6, y:TY0 - 10, width:12, height:TY1 - TY0 + 12, rx:3, fill:"url(#wood)"}, L.trellis);
+  el("rect", {x:TX1 - 6, y:TY0 - 10, width:12, height:TY1 - TY0 + 12, rx:3, fill:"url(#wood)"}, L.trellis);
+  el("rect", {x:TX0 - 14, y:TY0 - 14, width:TX1 - TX0 + 28, height:10, rx:4, fill:"url(#wood)"}, L.trellis);
+})();
+// soil bed + front grass
+el("path", {d:"M-200 372 C0 366 120 378 200 374 C300 370 420 378 600 372 L600 430 L-200 430Z", fill:"url(#soil)"}, L.soil);
+for (let i = 0; i < 40; i++) el("ellipse", {cx: rnd(-40, 440), cy: rnd(378, 425), rx: rnd(1, 3), ry: rnd(.6, 1.4), fill:"#5f3f28", opacity:.35}, L.soil);
+el("path", {d:"M-200 418 C0 410 100 424 200 420 C320 414 420 426 600 418 L600 520 L-200 520Z", fill:"url(#grass)"}, L.front);
+for (let i = 0; i < 90; i++){ const x = rnd(-60, 460), y = rnd(420, 482), h = rnd(6, 14); el("path", {d:`M${x} ${y} q${rnd(-3,3)} ${-h/2} ${rnd(-4,4)} ${-h}`, stroke: pick(["#6f9a5e","#86ad78","#5e8a5a"]), "stroke-width":1.4, fill:"none"}, L.front); }
+
+// ---- vines up the trellis: five climbing stems with leaves and curling tendrils
+const VINES = [];
+[134,166,200,234,266].forEach((bx, vi) => {
+  const pts = [], ph = vi * 1.7;
+  for (let y = 380, i = 0; y >= 132; y -= 14, i++) pts.push([bx + 9 * Math.sin(i * 0.8 + ph) + (i * 0.3) * (vi % 2 ? 1 : -1), y]);
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++){ const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`; }
+  const path = el("path", {d, fill:"none", stroke:"#5e8a5a", "stroke-width":2.6, "stroke-linecap":"round"}, L.vines);
+  const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; path.style.transition = "stroke-dashoffset 1.2s ease";
+  const v = {path, len, leaves: [], spots: []};
+  for (let f = 0.12; f < 0.98; f += 0.11){                                   // leaves (paired), each with its own reveal point
+    const p = path.getPointAtLength(len * f), side = (Math.round(f * 100) % 2 ? 1 : -1);
+    const leaf = el("path", {d:"M0 0 C4 -6 12 -6 16 0 C12 5 4 5 0 0Z", fill: pick(["#7fa86f","#6f9a5e","#8db57d"]), class:"pop",
+      transform:`translate(${p.x} ${p.y}) rotate(${side > 0 ? -25 : 205}) `}, L.leaves);
+    leaf.style.transform = "scale(0)"; v.leaves.push({e: leaf, f});
+    if (Math.random() < .55){ const t = el("path", {d:`M${p.x} ${p.y} c${-side*6} -4 ${-side*10} 4 ${-side*6} 8 c${side*3} 2 ${side*5} -2 ${side*2} -4`, fill:"none", stroke:"#6f9a5e", "stroke-width":1.1, class:"pop"}, L.leaves);
+      t.style.transform = "scale(0)"; v.leaves.push({e: t, f: f + .02}); }
+  }
+  for (let f = 0.30; f < 1.0; f += 0.095) v.spots.push(f);                   // where flowers can open
+  VINES.push(v);
+});
+// all the bloom spots, shuffled into the order they open in
+const BLOOMS = [];
+VINES.forEach((v, vi) => v.spots.forEach((f, k) => {
+  const p = v.path.getPointAtLength(v.len * f), side = (k + vi) % 2 ? 1 : -1;
+  const pi = (vi * 3 + k * 2) % PAL.length;
+  const host = el("g", {class:"sway", style:`animation-delay:${-rnd(0,5)}s`}, L.blooms);
+  const b = svgBloom(host, p.x + side * 10, p.y + 2, rnd(.42, .55), side * rnd(8, 22), pi);
+  b.style.transform = "scale(0)"; b.style.opacity = 0;
+  BLOOMS.push({e: b, f, vi, open: false, x: p.x + side * 10, y: p.y - 6});
+}));
+BLOOMS.sort((a, b) => (a.f - b.f) + (Math.random() - .5) * .25);
+
+// ---- the stepping-stone path of our years (foreground, getting smaller into the distance)
+const STONES = [];
+[[200,470,30,9],[176,451,25,8],[200,436,20,6.5],[218,423,16,5.5],[200,411,13,4.5],[200,398,11,3.6]].forEach(([x,y,rx,ry], i) => {
+  const g = el("g", {class:"pop"}, L.stones); g.style.transform = "scale(0)";
+  el("ellipse", {cx:x, cy:y + 1.5, rx, ry, fill:"#6d5a4a", opacity:.35}, g);
+  el("ellipse", {cx:x, cy:y, rx, ry, fill: pick(["#d8cfc4","#cfc6ba","#e1d8cc"]), stroke:"#a89a8a", "stroke-width":.8}, g);
+  el("ellipse", {cx:x - rx * .3, cy:y - ry * .3, rx: rx * .35, ry: ry * .3, fill:"#fff", opacity:.35}, g);
+  if (i === 5) el("path", {d:`M${x} ${y - 1} c-3 -4 -8 -1 -5 3 l5 4 l5 -4 c3 -4 -2 -7 -5 -3z`, fill:"#d4507f"}, g);
+  STONES.push(g);
+});
+
+// ---- the puddle and its frog (for over-watering)
+const puddle = el("ellipse", {cx:118, cy:452, rx:0, ry:0, fill:"url(#puddle)", opacity:.9}, L.puddleL);
+const frog = el("g", {transform:"translate(122 448)"}, L.puddleL);
+(function(){ const f = el("g", {class:"hop"}, frog);
+  el("ellipse", {cx:0, cy:0, rx:12, ry:8, fill:"#7cb26a"}, f); el("ellipse", {cx:-6, cy:-7, rx:4.5, ry:4.5, fill:"#7cb26a"}, f); el("ellipse", {cx:6, cy:-7, rx:4.5, ry:4.5, fill:"#7cb26a"}, f);
+  el("circle", {cx:-6, cy:-8, r:2.2, fill:"#fff"}, f); el("circle", {cx:6, cy:-8, r:2.2, fill:"#fff"}, f); el("circle", {cx:-6, cy:-8, r:1.1, fill:"#222"}, f); el("circle", {cx:6, cy:-8, r:1.1, fill:"#222"}, f);
+  el("path", {d:"M-5 1 q5 4 10 0", stroke:"#3f6b35", fill:"none", "stroke-width":1.2}, f); })();
+frog.style.opacity = 0; frog.style.transition = "opacity .6s";
+
+// ---- the watering can and its drops
+const can = el("g", {transform:"translate(70 300)"}, L.can);
+(function(){ const c = el("g", {id:"canBody"}, can);
+  el("path", {d:"M-22 -10 L18 -10 L14 20 L-18 20Z", fill:"#9fb6c8", stroke:"#6f8aa0", "stroke-width":1.2}, c);
+  el("path", {d:"M18 -4 L44 -18 L46 -14 L20 4Z", fill:"#9fb6c8", stroke:"#6f8aa0", "stroke-width":1.2}, c);
+  el("ellipse", {cx:46, cy:-17, rx:3, ry:6, fill:"#8aa3b8", transform:"rotate(-30 46 -17)"}, c);
+  el("path", {d:"M-14 -10 C-14 -26 10 -26 10 -10", fill:"none", stroke:"#6f8aa0", "stroke-width":3}, c); })();
+L.can.style.opacity = 0; L.can.style.transition = "opacity .5s";
+const DROPS = []; for (let i = 0; i < 14; i++) DROPS.push(el("ellipse", {rx:1.3, ry:2.6, fill:"#8fc3e6", opacity:0}, L.can));
+
+// ---- the posy basket (front left)
+const basket = el("g", {transform:"translate(52 446)"}, L.basket);
+const posyG = el("g", {}, basket);
+el("path", {d:"M-26 -4 L26 -4 L20 22 L-20 22Z", fill:"#c49a6c", stroke:"#8a6a48", "stroke-width":1.2}, basket);
+for (let i = -3; i <= 3; i++) el("line", {x1: i * 7, y1: -4, x2: i * 5.6, y2: 22, stroke:"#8a6a48", "stroke-width":.7, opacity:.6}, basket);
+el("path", {d:"M-26 -4 C-26 -40 26 -40 26 -4", fill:"none", stroke:"#8a6a48", "stroke-width":3}, basket);
+const POSY = [];
+for (let i = 0; i < 14; i++){ const a = -1.1 + i / 13 * 2.2, x = Math.sin(a) * 18 * (0.6 + (i % 3) * .2), y = -10 - Math.cos(a) * 14 - (i % 3) * 5;
+  const g = el("g", {class:"pop"}, posyG); el("path", {d:`M${x * .3} 0 L${x} ${y + 6}`, stroke:"#6f9a5e", "stroke-width":1.2}, g);
+  svgBloom(g, x, y, .32, a * 30, (i * 3) % PAL.length, ""); g.style.transform = "scale(0)"; POSY.push(g); }
+L.basket.style.opacity = 0; L.basket.style.transition = "opacity .6s";
+
+// ---- milestones: a robin (25), a heart of sweet peas on the trellis (50), a garden sign (75); the owl for midnight
+const robin = el("g", {transform:`translate(${TX0} ${TY0 - 14})`, class:"pop"}, L.birds);
+(function(){ el("ellipse", {cx:0, cy:-8, rx:10, ry:8, fill:"#8a6a52"}, robin); el("ellipse", {cx:4, cy:-6, rx:6, ry:5.5, fill:"#e3734b"}, robin);
+  el("circle", {cx:7, cy:-15, r:5.5, fill:"#8a6a52"}, robin); el("circle", {cx:9, cy:-16, r:1.2, fill:"#222"}, robin); el("path", {d:"M12 -15 l4 1 l-4 1z", fill:"#e9b85c"}, robin);
+  el("path", {d:"M-9 -8 l-8 -3 l1 5z", fill:"#7a5c46"}, robin); el("line", {x1:-1, y1:0, x2:-2, y2:4, stroke:"#7a5c46"}, robin); el("line", {x1:3, y1:0, x2:4, y2:4, stroke:"#7a5c46"}, robin); })();
+robin.style.transform = "scale(0)";
+const wreath = el("g", {class:"pop"}, L.wreath); wreath.style.transform = "scale(0)";
+(function(){ let d=""; for (let i = 0; i <= 60; i++){ const t = i / 60 * Math.PI * 2; d += (i ? "L" : "M") + (200 + 16 * Math.pow(Math.sin(t), 3) * 1.5).toFixed(1) + " " + (172 - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * 1.5).toFixed(1); }
+  el("path", {d, fill:"rgba(255,240,246,.75)", stroke:"#5e8a5a", "stroke-width":2.4}, wreath); })();
+for (let i = 0; i < 18; i++){ const t = i / 18 * Math.PI * 2, x = 200 + 16 * Math.pow(Math.sin(t), 3) * 1.5, y = 172 - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * 1.5;
+  svgBloom(wreath, x, y, .34, rnd(-30, 30), [2,4][i % 2], ""); }
+const sign = el("g", {class:"pop", transform:"translate(300 424)"}, L.sign); sign.style.transform = "scale(0)";
+el("rect", {x:-3, y:-30, width:6, height:40, fill:"#9c7d63"}, sign);
+el("rect", {x:-38, y:-58, width:76, height:30, rx:5, fill:"#e9d8bf", stroke:"#9c7d63", "stroke-width":2}, sign);
+el("text", {x:0, y:-38, "text-anchor":"middle", "font-family":"Great Vibes", "font-size":15, fill:"#7d3c6b"}, sign).textContent = "Laura's Garden";
+const owl = el("g", {transform:`translate(${TX1} ${TY0 - 14})`}, L.birds);
+(function(){ el("ellipse", {cx:0, cy:-12, rx:10, ry:13, fill:"#8a7460"}, owl); el("circle", {cx:-4, cy:-17, r:4, fill:"#f6edd8"}, owl); el("circle", {cx:4, cy:-17, r:4, fill:"#f6edd8"}, owl);
+  el("circle", {cx:-4, cy:-17, r:1.8, fill:"#222"}, owl); el("circle", {cx:4, cy:-17, r:1.8, fill:"#222"}, owl); el("path", {d:"M-1 -13 l1 3 l1 -3z", fill:"#e9b85c"}, owl);
+  el("path", {d:"M-9 -24 l3 5 M9 -24 l-3 5", stroke:"#8a7460", "stroke-width":3}, owl); })();
+owl.style.opacity = 0; owl.style.transition = "opacity 1s";
+
+// ======================================================================== insects
+const INSECTS = [];
+function makeInsect(i){
+  const butterfly = i % 3 === 2, g = el("g", {}, L.insects);
+  if (butterfly){ const c = pick([["#f7b6d2","#c2457a"],["#c3a6e6","#7d58b5"],["#ffe39a","#d39a2e"],["#bfe0f2","#4f8ab8"]]);
+    const w = el("g", {}, g); el("ellipse", {cx:-5, cy:-3, rx:6, ry:5, fill:c[0], stroke:c[1], "stroke-width":.8}, w); el("ellipse", {cx:5, cy:-3, rx:6, ry:5, fill:c[0], stroke:c[1], "stroke-width":.8}, w);
+    el("ellipse", {cx:-4, cy:4, rx:4, ry:3.5, fill:c[0], stroke:c[1], "stroke-width":.8}, w); el("ellipse", {cx:4, cy:4, rx:4, ry:3.5, fill:c[0], stroke:c[1], "stroke-width":.8}, w);
+    el("rect", {x:-.8, y:-6, width:1.6, height:12, rx:.8, fill:"#4a3540"}, g); g.wings = w;
+  } else {
+    const w1 = el("ellipse", {cx:-2, cy:-5, rx:3.4, ry:4.4, fill:"#fff", opacity:.8}, g), w2 = el("ellipse", {cx:3, cy:-5, rx:3.4, ry:4.4, fill:"#fff", opacity:.8}, g);
+    el("ellipse", {cx:0, cy:0, rx:6, ry:4.4, fill:"#f2c230"}, g); el("path", {d:"M-2 -4 v8 M1.5 -4.2 v8.4", stroke:"#3a2a1a", "stroke-width":1.6}, g); el("circle", {cx:5.5, cy:-.5, r:1.8, fill:"#3a2a1a"}, g);
+    g.wings = {setAttribute(){}}; g.bee = [w1, w2];
+  }
+  g.style.display = "none"; return {g, butterfly, ph: rnd(0, 6.28), sp: rnd(.6, 1.1), home: null, x: i % 2 ? -80 : 480, y: rnd(60, 200), on: false, a: 0};
+}
+for (let i = 0; i < 26; i++) INSECTS.push(makeInsect(i));
+
+// ======================================================================== state, scoring, meter
+const W = {water:16, sun:16, bees:16, posy:16, years:12, photos:24};
+const score = {water:0, sun:0, bees:0, posy:0, years:0, photos:0};
+let total = 0, finaleDone = false, milestones = new Set();
+const meterFill = document.getElementById("fill"), bulb = document.getElementById("bulb"), meter = document.getElementById("meter");
+function credit(k, frac){
+  const v = W[k] * clamp(frac);
+  if (v <= score[k] + 0.01) return;
+  score[k] = v;
+  const t = Object.values(score).reduce((a, b) => a + b, 0);
+  total = Math.min(100, Math.round(t));
+  meterFill.style.height = total + "%"; bulb.textContent = total + "%";
+  meter.classList.remove("pulse"); void meter.offsetWidth; meter.classList.add("pulse");
+  if (navigator.vibrate) navigator.vibrate(12);
+  [[25,"A robin has come to see 🐦", robin],[50,"Look, a heart on the trellis 💗", wreath],[75,"It's your garden, Laura 🌸", sign]].forEach(([m, txt, e]) => {
+    if (total >= m && !milestones.has(m)){ milestones.add(m); e.style.transform = "scale(1)"; toast(txt); }
+  });
+  if (total >= 100 && !finaleDone){ finaleDone = true; setTimeout(startFinale, 900); }
+}
+let toastT; function toast(s){ const t = document.getElementById("toast"); t.textContent = s; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600); }
+function done(id){ document.getElementById(id).classList.add("done"); }
+function msg(id, s){ document.querySelector(`#${id} .msg`).textContent = s; }
+// closeness to a sweet spot [a,b]: 1 inside, falling to 0 over `fall`; partial credit is capped so the spot itself still matters
+const near = (v, a, b, fall) => v >= a && v <= b ? 1 : 0.6 * clamp(1 - (v < a ? a - v : v - b) / fall);
+
+// ======================================================================== the garden responds
+let growth = 0, sunOpen = 0.55, extraBlooms = 0;
+function renderGarden(){
+  VINES.forEach(v => { v.path.style.strokeDashoffset = v.len * (1 - growth);
+    v.leaves.forEach(l => l.e.style.transform = growth >= l.f ? "scale(1)" : "scale(0)"); });
+  const visible = Math.round(clamp(growth * 1.15) * (18 + extraBlooms));
+  BLOOMS.forEach((b, i) => { const on = i < visible && b.f <= growth + 0.02; b.open = on;
+    b.e.style.transform = on ? `scale(${sunOpen})` : "scale(0)"; b.e.style.opacity = on ? 1 : 0; });
+}
+// ---- water
+const sWater = document.getElementById("s-water"); let canTimer;
+sWater.addEventListener("input", () => {
+  const v = +sWater.value;
+  growth = clamp(v / 55); renderGarden();
+  document.getElementById("so0").setAttribute("stop-color", mixHex("#b58560", "#6e4a30", clamp(v / 70)));
+  document.getElementById("so1").setAttribute("stop-color", mixHex("#8a6040", "#4e321f", clamp(v / 70)));
+  const over = clamp((v - 74) / 26); puddle.setAttribute("rx", 34 * over); puddle.setAttribute("ry", 9 * over); frog.style.opacity = v > 84 ? 1 : 0;
+  L.can.style.opacity = 1; clearTimeout(canTimer); canTimer = setTimeout(() => L.can.style.opacity = 0, 1400);
+  msg("c-water", v < 12 ? "The soil is still dry…" : v < 42 ? "A little more…" : v <= 68 ? "Perfect. Look at them climb 🌱" : v <= 82 ? "Getting a bit soggy…" : "Oops, a puddle! And a visitor 🐸");
+  credit("water", near(v, 42, 68, 40)); if (v >= 42 && v <= 68) done("c-water");
+});
+// ---- sun: dawn → bright morning → sunset → midnight
+const SKY = [[0,"#f6d7e0","#fff0df"],[35,"#bfe0f4","#fff4dc"],[62,"#a9d4f0","#fff7e6"],[78,"#f2b48e","#fbd7b0"],[90,"#3a3f73","#7a6f9e"],[100,"#1f2450","#3d3f74"]];
+const sSun = document.getElementById("s-sun");
+function setSun(v){
+  let i = 0; while (i < SKY.length - 2 && v > SKY[i + 1][0]) i++;
+  const a = SKY[i], b = SKY[i + 1], t = clamp((v - a[0]) / (b[0] - a[0]));
+  document.getElementById("sk0").setAttribute("stop-color", mixHex(a[1], b[1], t)); document.getElementById("sk1").setAttribute("stop-color", mixHex(a[2], b[2], t));
+  const ang = Math.PI * (1 - clamp(v / 82)); sun.setAttribute("transform", `translate(${200 + Math.cos(ang) * 200} ${300 - Math.sin(ang) * 210})`);
+  L.sunL.style.opacity = v > 84 ? 0 : 1;
+  const night = clamp((v - 82) / 12); L.stars.style.opacity = night; L.moonL.style.opacity = night; moon.setAttribute("transform", `translate(${300 - night * 40} ${90})`);
+  owl.style.opacity = v > 90 ? 1 : 0;
+  L.hills.style.filter = `brightness(${1 - night * .45})`; L.front.style.filter = L.soil.style.filter = L.trellis.style.filter = `brightness(${1 - night * .35})`;
+  sunOpen = v < 15 ? .6 : v <= 70 ? 1 : v <= 84 ? .8 : .55; renderGarden();
+}
+sSun.addEventListener("input", () => { const v = +sSun.value; setSun(v);
+  msg("c-sun", v < 15 ? "Still dawn, and the flowers are sleepy" : v < 33 ? "Morning is coming…" : v <= 62 ? "Glorious! Every flower is open ☀️" : v <= 84 ? "Sunset, so pretty, but they're closing" : "Goodnight, garden 🦉 (a bit too far!)");
+  credit("sun", near(v, 33, 62, 40)); if (v >= 33 && v <= 62) done("c-sun"); });
+// ---- bees & butterflies
+const sBees = document.getElementById("s-bees"); let nVisitors = 0;
+sBees.addEventListener("input", () => { const v = +sBees.value; nVisitors = Math.round(v / 100 * 26);
+  msg("c-bees", nVisitors === 0 ? "No visitors yet" : nVisitors < 4 ? "A shy visitor or two" : nVisitors <= 10 ? "Perfect. Everything's humming 🐝🦋" : nVisitors <= 16 ? "Getting rather busy…" : "Bzzz! Far too many! 😅");
+  credit("bees", near(nVisitors, 4, 10, 10)); if (nVisitors >= 4 && nVisitors <= 10) done("c-bees"); });
+// ---- posy
+const sPosy = document.getElementById("s-posy");
+sPosy.addEventListener("input", () => { const v = +sPosy.value, n = Math.round(v / 100 * POSY.length);
+  L.basket.style.opacity = 1; POSY.forEach((p, i) => p.style.transform = i < n ? "scale(1)" : "scale(0)");
+  extraBlooms = Math.round(v / 100 * 30); if (growth < .3){ growth = .5; } renderGarden();
+  msg("c-posy", v === 0 ? "Not picked yet" : v < 60 ? "A few stems… keep going" : "A beautiful bunch, and look, more flowers! 💐");
+  credit("posy", clamp(v / 60) * (v >= 60 ? 1 : 0.6)); if (v >= 60) done("c-posy"); });
+// ---- years
+const sYears = document.getElementById("s-years");
+const GIFTS = ["paper","cotton","leather","linen","wood","iron"];
+const ORD = ["1st","2nd","3rd","4th","5th","6th"];
+sYears.addEventListener("input", () => { const n = +sYears.value;
+  STONES.forEach((s, i) => s.style.transform = i < n ? "scale(1)" : "scale(0)");
+  msg("c-years", n === 0 ? "2020: the day we began 💍" : n < 6 ? `${ORD[n - 1]} anniversary · ${2020 + n} · ${GIFTS[n - 1]}` : "Six years (iron), and still growing 💗");
+  credit("years", n / 6); if (n === 6) done("c-years"); });
+
+// ======================================================================== "Where were we?"
+const PLACES = [
+  {file:"photos/chicheley.jpg", answer:"Chicheley Hall", line:"Chicheley Hall: such a romantic day 💕"},
+  {file:"photos/nowton.jpg", answer:"Nowton Park", line:"Nowton Park, near Bury St Edmunds 🌳"},
+  {file:"photos/woottens.jpg", answer:"Woottens of Wenhaston", line:"Woottens of Wenhaston, all those pelargoniums 🌺"},
+];
+const DECOYS = ["Kew Gardens","Sissinghurst","RHS Wisley","Beth Chatto's"];
+(function(){
+  const q = document.getElementById("quiz"); let solved = 0;
+  PLACES.forEach((p, i) => {
+    const wrap = document.createElement("div"); wrap.style.margin = i ? "14px 0 0" : "4px 0 0";
+    wrap.innerHTML = `<div class="photo"><div class="ph">Memory ${i + 1}</div><img alt="" src="${p.file}"><div class="cap">${p.line}</div></div>
+      <input type="range" min="0" max="100" value="0" aria-label="Bring memory ${i + 1} into focus"><div class="opts"></div>`;
+    q.appendChild(wrap);
+    const img = wrap.querySelector("img"), r = wrap.querySelector("input"), opts = wrap.querySelector(".opts"), ph = wrap.querySelector(".ph");
+    img.onload = () => ph.remove(); img.onerror = () => { img.remove(); ph.textContent = `Memory ${i + 1} (photo to come)`; };
+    const choices = [...PLACES.map(x => x.answer), DECOYS[i]].sort(() => Math.random() - .5);
+    choices.forEach(c => { const b = document.createElement("button"); b.textContent = c; opts.appendChild(b);
+      b.onclick = () => { if (wrap.dataset.ok) return;
+        if (c === p.answer){ wrap.dataset.ok = 1; b.classList.add("right"); wrap.querySelector(".photo").classList.add("solved"); r.value = 100; img.style.filter = "none";
+          solved++; credit("photos", solved / 3); burst(b); if (solved === 3) done("c-photos"); }
+        else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong"); } }; });
+    r.addEventListener("input", () => { const v = +r.value; img.style.filter = `blur(${(1 - v / 100) * 16}px) saturate(1.1)`; img.style.transform = `scale(${1.08 - v / 100 * .08})`;
+      if (v > 80) opts.classList.add("open"); });
+  });
+})();
+// a little puff of petals from a button
+function burst(node){ const r = node.getBoundingClientRect();
+  for (let i = 0; i < 14; i++){ const s = document.createElement("div"); const c = pick(PAL);
+    Object.assign(s.style, {position:"fixed", left: r.left + r.width / 2 + "px", top: r.top + r.height / 2 + "px", width:"10px", height:"14px", borderRadius:"50% 50% 50% 50% / 60% 60% 40% 40%",
+      background:c[1], zIndex:20, pointerEvents:"none", transition:"all 1s cubic-bezier(.2,.8,.3,1)", opacity:1});
+    document.body.appendChild(s); const a = rnd(0, 6.28), d = rnd(40, 90);
+    requestAnimationFrame(() => { s.style.transform = `translate(${Math.cos(a) * d}px,${Math.sin(a) * d - 20}px) rotate(${rnd(-180,180)}deg)`; s.style.opacity = 0; });
+    setTimeout(() => s.remove(), 1100); } }
+
+// ======================================================================== the living garden: insects, drops, gentle motion
+let T0 = performance.now();
+function tick(now){
+  const t = (now - T0) / 1000;
+  // insects: visit open flowers; past 16 they become a comic buzzing cloud
+  const openB = BLOOMS.filter(b => b.open), swarm = nVisitors > 16;
+  INSECTS.forEach((ins, i) => {
+    const want = i < nVisitors;
+    if (want && !ins.on){ ins.on = true; ins.x = i % 2 ? -30 : 430; ins.y = rnd(80, 300); ins.home = null; }
+    if (!want && ins.on){ ins.on = false; }
+    let tx, ty;
+    if (!ins.on){ tx = ins.x < 200 ? -90 : 490; ty = ins.y - 20; }
+    else if (swarm){ tx = 200 + Math.cos(t * 3 + i) * 40 + Math.sin(t * 7 + i * 2) * 14; ty = 210 + Math.sin(t * 2.6 + i * 1.3) * 34; }
+    else { if (!ins.home || !ins.home.open || Math.random() < .002) ins.home = openB.length ? pick(openB) : {x: 200 + Math.cos(i) * 80, y: 250, open: true};
+      tx = ins.home.x + Math.cos(t * ins.sp + ins.ph) * 14; ty = ins.home.y - 8 + Math.sin(t * ins.sp * 1.3 + ins.ph) * 8; }
+    ins.x += (tx - ins.x) * (swarm ? .08 : .025); ins.y += (ty - ins.y) * (swarm ? .08 : .025);
+    const visible = ins.on || (ins.x > -30 && ins.x < 430);
+    ins.g.style.display = visible ? "" : "none";
+    const flap = ins.butterfly ? 0.25 + 0.75 * Math.abs(Math.sin(t * 9 + ins.ph)) : 1;
+    ins.g.setAttribute("transform", `translate(${ins.x} ${ins.y}) scale(${ins.butterfly ? .9 : .75})`);
+    if (ins.butterfly) ins.g.wings.setAttribute("transform", `scale(${flap} 1)`);
+    else ins.g.bee.forEach((w, k) => w.setAttribute("opacity", (Math.sin(t * 40 + k) > 0 ? .9 : .4)));
+  });
+  // water drops while the can is out
+  const pour = +getComputedStyle(L.can).opacity > .2;
+  DROPS.forEach((d, i) => { const p = ((t * 1.6 + i / DROPS.length) % 1);
+    d.setAttribute("cx", 70 + 44 + p * 18 + (i % 3) * 3); d.setAttribute("cy", 300 - 16 + p * 80); d.setAttribute("opacity", pour ? (1 - p) * .9 : 0); });
+  can.setAttribute("transform", `translate(70 300) rotate(${pour ? 18 : 0})`);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+setSun(0); renderGarden();
+
+// ======================================================================== intro + music
+const music = document.getElementById("music"); let musicReady = false;
+document.getElementById("begin").addEventListener("click", () => {
+  document.getElementById("intro").classList.add("gone");
+  // unlock audio on this first tap (phones only allow sound that starts from a touch)
+  music.muted = true; const pr = music.play(); if (pr) pr.then(() => { music.pause(); music.currentTime = 0; music.muted = false; musicReady = true; }).catch(() => { music.muted = false; });
+});
+const musicBtn = document.getElementById("musicBtn");
+musicBtn.onclick = () => { if (music.paused){ music.play(); musicBtn.textContent = "♫ Pause music"; } else { music.pause(); musicBtn.textContent = "♫ Play music"; } };
+document.getElementById("again").onclick = () => location.reload();
+
+// ======================================================================== THE FINALE: flowers everywhere, then I LOVE YOU in petals
+const cv = document.getElementById("fx"), cx = cv.getContext("2d");
+let VW, VH, DPR;
+function sizeCanvas(){ DPR = Math.min(2, devicePixelRatio || 1); VW = innerWidth; VH = innerHeight; cv.width = VW * DPR; cv.height = VH * DPR; cx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+const P2 = {S: new Path2D(STANDARD), WL: new Path2D(WING_L), WR: new Path2D(WING_R), K: new Path2D(KEEL), C: new Path2D(CALYX), V: new Path2D(VEIN)};
+function sprite(pi){             // one sweet pea painted onto its own little canvas, reused many times
+  const c = document.createElement("canvas"), S = 130; c.width = c.height = S; const g = c.getContext("2d"); g.translate(S / 2, S * .58); g.scale(2.3, 2.3);
+  const p = PAL[pi], gr = g.createRadialGradient(0, 4, 2, 0, -6, 30); gr.addColorStop(0, p[0]); gr.addColorStop(.55, p[1]); gr.addColorStop(1, p[2]);
+  g.fillStyle = "#6f9a5e"; g.fill(P2.C);
+  g.fillStyle = gr; g.fill(P2.S); g.strokeStyle = p[2]; g.globalAlpha = .55; g.lineWidth = .9; g.stroke(P2.S); g.globalAlpha = .1; g.lineWidth = .5; g.stroke(P2.V); g.globalAlpha = 1;
+  const gw = g.createLinearGradient(0, 0, 0, 18); gw.addColorStop(0, p[0]); gw.addColorStop(1, p[1]);
+  g.fillStyle = gw; g.fill(P2.WL); g.fill(P2.WR); g.globalAlpha = .5; g.lineWidth = .7; g.stroke(P2.WL); g.stroke(P2.WR); g.globalAlpha = 1;
+  g.fillStyle = p[0]; g.fill(P2.K); g.globalAlpha = .45; g.stroke(P2.K);
+  return c;
+}
+let SPR = null;
+const PETAL_COLS = ["#f29ab9","#de5fa9","#c3a6e6","#f7b6d2","#b34864","#f4a99a","#e07aa6","#fbd3ea"];
+
+function startFinale(){
+  window.scrollTo({top: 0, behavior: "smooth"});
+  sizeCanvas(); SPR = SPR || PAL.map((_, i) => sprite(i));
+  cv.style.display = "block";
+  if (music.src){ try { music.currentTime = 0; music.volume = 1; music.play().catch(() => {}); } catch(e){} }
+  const W0 = VW, H0 = VH, start = performance.now();
+  // 1) vines curl in from every edge
+  const vines = [];
+  for (let i = 0; i < 26; i++){ const side = i % 4, u = rnd(.05, .95);
+    const x0 = side === 0 ? -10 : side === 1 ? W0 + 10 : u * W0, y0 = side === 2 ? -10 : side === 3 ? H0 + 10 : u * H0;
+    const ang = Math.atan2(H0 / 2 - y0, W0 / 2 - x0) + rnd(-.6, .6), len = rnd(.25, .5) * Math.min(W0, H0) + 60;
+    const pts = []; let x = x0, y = y0, a = ang;
+    for (let k = 0; k < 40; k++){ a += Math.sin(k * .45 + i) * .12; x += Math.cos(a) * len / 40; y += Math.sin(a) * len / 40; pts.push([x, y]); }
+    vines.push({pts, t0: rnd(0, .9)}); }
+  // 2) blooms open all over, edges first, sparing the middle band where the words will go
+  const blooms = [];
+  for (let i = 0; i < 170; i++){
+    let x = rnd(-20, W0 + 20), y = rnd(-20, H0 + 20);
+    const mid = Math.abs(y - H0 * .42) < H0 * .14 && x > W0 * .06 && x < W0 * .94; if (mid && Math.random() < .8) y += (y < H0 * .42 ? -1 : 1) * H0 * .16;
+    const edge = Math.min(x, W0 - x, y, H0 - y) / (Math.min(W0, H0) / 2);
+    blooms.push({x, y, s: rnd(.35, .75) * Math.min(1.25, Math.max(W0, 380) / 420), r: rnd(-.6, .6), spr: pick(SPR), t0: .4 + clamp(edge) * 2.4 + rnd(0, .5), sw: rnd(0, 6)}); }
+  blooms.sort((a, b) => a.s - b.s);
+  // 3) petals that will gather into I LOVE YOU
+  const words = "I LOVE YOU", off = document.createElement("canvas"), og = off.getContext("2d");
+  off.width = W0; off.height = H0; const fs = Math.min(W0 / 5.0, 130);
+  og.font = `700 ${fs}px "Cormorant Garamond", Georgia, serif`; og.textAlign = "center"; og.textBaseline = "middle"; og.fillStyle = "#000";
+  const lines = W0 < 520 ? ["I LOVE", "YOU"] : [words];
+  lines.forEach((ln, k) => og.fillText(ln, W0 / 2, H0 * .42 + (k - (lines.length - 1) / 2) * fs * 1.0));
+  const data = og.getImageData(0, 0, W0, H0).data, targets = [], step = Math.max(4, Math.round(fs / 17));
+  for (let y = 0; y < H0; y += step) for (let x = 0; x < W0; x += step) if (data[(y * W0 + x) * 4 + 3] > 128) targets.push([x + rnd(-1, 1), y + rnd(-1, 1)]);
+  const petals = targets.map(([tx, ty], i) => { const a = rnd(0, 6.28), R = Math.max(W0, H0) * rnd(.6, .9);
+    return {sx: W0 / 2 + Math.cos(a) * R, sy: H0 / 2 + Math.sin(a) * R, tx, ty, c: pick(PETAL_COLS), r: rnd(0, 6.28), sz: step * rnd(.75, 1.05), d: rnd(0, .9), sp: rnd(-1, 1)}; });
+  const fall = []; for (let i = 0; i < 60; i++) fall.push({x: rnd(0, W0), y: rnd(-H0, 0), c: pick(PETAL_COLS), r: rnd(0, 6.28), s: rnd(5, 9), v: rnd(20, 45), w: rnd(0, 6)});
+  const finale = document.getElementById("finale"); finale.classList.add("on");
+  let textShown = false;
+
+  function frame(now){
+    const t = (now - start) / 1000;
+    cx.clearRect(0, 0, W0, H0);
+    // a soft cream veil that rises behind everything
+    cx.fillStyle = `rgba(255,248,242,${clamp(t / 2.2) * .9})`; cx.fillRect(0, 0, W0, H0);
+    // vines
+    cx.lineCap = "round"; cx.strokeStyle = "#6f9a5e";
+    vines.forEach(v => { const p = clamp((t - v.t0) / 2.2); if (p <= 0) return; const n = Math.max(2, Math.floor(v.pts.length * p));
+      cx.lineWidth = 2.6; cx.beginPath(); cx.moveTo(v.pts[0][0], v.pts[0][1]); for (let k = 1; k < n; k++) cx.lineTo(v.pts[k][0], v.pts[k][1]); cx.stroke();
+      for (let k = 6; k < n; k += 9){ const [x, y] = v.pts[k]; cx.lineWidth = 1.3; cx.beginPath(); for (let a = 0; a < 9; a += .3){ const rr = 7 - a * .65; cx.lineTo(x + Math.cos(a + k) * rr, y + Math.sin(a + k) * rr); } cx.stroke(); } });
+    // blooms
+    blooms.forEach(b => { const p = clamp((t - b.t0) / .9); if (p <= 0) return;
+      const e = p < 1 ? 1 + 2.7 * Math.pow(p - 1, 3) + 1.7 * Math.pow(p - 1, 2) : 1, s = b.s * e;
+      cx.save(); cx.translate(b.x, b.y); cx.rotate(b.r + Math.sin(t * 1.2 + b.sw) * .05); cx.scale(s, s); cx.drawImage(b.spr, -65, -75); cx.restore(); });
+    // a glow behind the words
+    const gl = clamp((t - 3.4) / 1.5);
+    if (gl > 0){ const rg = cx.createRadialGradient(W0 / 2, H0 * .42, 10, W0 / 2, H0 * .42, Math.min(W0, H0) * .62);
+      rg.addColorStop(0, `rgba(255,252,246,${.9 * gl})`); rg.addColorStop(.55, `rgba(255,244,248,${.6 * gl})`); rg.addColorStop(1, "rgba(255,240,246,0)"); cx.save(); cx.translate(W0 / 2, H0 * .42); cx.scale(1.25, .8); cx.translate(-W0 / 2, -H0 * .42); cx.fillStyle = rg; cx.fillRect(0, 0, W0, H0); cx.restore(); }
+    // petals swirl in and settle into I LOVE YOU
+    petals.forEach(p => { const k = clamp((t - 3.2 - p.d) / 2.6), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      if (k <= 0) return;
+      const sw = (1 - e) * 120, x = lerp(p.sx, p.tx, e) + Math.cos(t * 2 + p.r) * sw * .4, y = lerp(p.sy, p.ty, e) + Math.sin(t * 2 + p.r) * sw * .4;
+      const breathe = e >= 1 ? 1 + Math.sin(t * 2 + p.r) * .06 : 1;
+      cx.save(); cx.translate(x, y); cx.rotate(p.r + (1 - e) * 6 + p.sp * t * .2); cx.scale(breathe, breathe); cx.fillStyle = p.c;
+      cx.beginPath(); cx.ellipse(0, 0, p.sz * .62, p.sz * .9, 0, 0, Math.PI * 2); cx.fill();
+      cx.fillStyle = "rgba(255,255,255,.35)"; cx.beginPath(); cx.ellipse(-p.sz * .18, -p.sz * .25, p.sz * .18, p.sz * .3, 0, 0, Math.PI * 2); cx.fill(); cx.restore(); });
+    // the words, crisp, over the petals once they've settled
+    const wt = clamp((t - 6.4) / 1.4);
+    if (wt > 0){ cx.save(); cx.globalAlpha = wt * .9; cx.font = `700 ${fs}px "Cormorant Garamond", Georgia, serif`; cx.textAlign = "center"; cx.textBaseline = "middle";
+      cx.shadowColor = "rgba(255,255,255,.9)"; cx.shadowBlur = 18; cx.fillStyle = "#9b1f5b";
+      lines.forEach((ln, k) => cx.fillText(ln, W0 / 2, H0 * .42 + (k - (lines.length - 1) / 2) * fs * 1.0)); cx.restore(); }
+    // gentle falling petals for ever after
+    if (t > 5){ fall.forEach(f => { f.y += f.v / 60; f.x += Math.sin(t + f.w) * .4; f.r += .02; if (f.y > H0 + 10){ f.y = -10; f.x = rnd(0, W0); }
+      cx.save(); cx.translate(f.x, f.y); cx.rotate(f.r); cx.fillStyle = f.c; cx.globalAlpha = .85; cx.beginPath(); cx.ellipse(0, 0, f.s * .6, f.s, 0, 0, Math.PI * 2); cx.fill(); cx.restore(); }); }
+    if (t > 7.6 && !textShown){ textShown = true; finale.classList.add("text"); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+addEventListener("resize", () => { if (cv.style.display === "block") sizeCanvas(); });
+// ?finale in the address shows the ending straight away (for testing)
+if (/finale/.test(location.search)) addEventListener("load", () => { document.getElementById("intro").classList.add("gone"); setTimeout(startFinale, 300); });
+</script>
+</body>
+</html>
