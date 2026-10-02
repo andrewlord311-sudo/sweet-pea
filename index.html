@@ -430,7 +430,7 @@ function credit(k, frac){
   [[25,"A robin has come to see 🐦", robin],[50,"Look, a heart on the trellis 💗", wreath],[75,"It's your garden, Laura 🌸", sign]].forEach(([m, txt, e]) => {
     if (total >= m && !milestones.has(m)){ milestones.add(m); e.style.transform = "scale(1)"; toast(txt); }
   });
-  if (total >= 100 && !finaleDone){ finaleDone = true; setTimeout(startFinale, 900); }
+  if (total >= 100 && !finaleDone){ finaleDone = true; playMusic(); setTimeout(startFinale, 900); }
 }
 let toastT; function toast(s){ const t = document.getElementById("toast"); t.textContent = s; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600); }
 function done(id){ document.getElementById(id).classList.add("done"); }
@@ -569,9 +569,17 @@ setSun(0); renderGarden();
 const music = document.getElementById("music"); let musicReady = false;
 document.getElementById("begin").addEventListener("click", () => {
   document.getElementById("intro").classList.add("gone");
-  // unlock audio on this first tap (phones only allow sound that starts from a touch)
-  music.muted = true; const pr = music.play(); if (pr) pr.then(() => { music.pause(); music.currentTime = 0; music.muted = false; musicReady = true; }).catch(() => { music.muted = false; });
+  // Unlock the music on this first tap: phones only let sound start from a touch, and an iPhone remembers the permission
+  // for this audio element once it has really played (an unmuted play, paused at once, so nothing is heard).
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch(e){}
+  const pr = music.play(); if (pr) pr.then(() => { music.pause(); music.currentTime = 0; musicReady = true; }).catch(() => {});
+  else { music.pause(); musicReady = true; }
 });
+let musicStarted = false;
+function playMusic(){ if (musicStarted) return; musicStarted = true;
+  try { music.currentTime = 0; const p = music.play(); if (p) p.catch(() => { musicStarted = false; }); } catch(e){ musicStarted = false; } }
+// if a phone still refused, the next touch anywhere on the ending starts it
+addEventListener("pointerdown", () => { if (finaleDone && music.paused && !musicStarted) playMusic(); });
 const musicBtn = document.getElementById("musicBtn");
 musicBtn.onclick = () => { if (music.paused){ music.play(); musicBtn.textContent = "♫ Pause music"; } else { music.pause(); musicBtn.textContent = "♫ Play music"; } };
 document.getElementById("again").onclick = () => location.reload();
@@ -598,7 +606,7 @@ function startFinale(){
   window.scrollTo({top: 0, behavior: "smooth"});
   sizeCanvas(); SPR = SPR || PAL.map((_, i) => sprite(i));
   cv.style.display = "block";
-  if (music.src){ try { music.currentTime = 0; music.volume = 1; music.play().catch(() => {}); } catch(e){} }
+  playMusic();
   const W0 = VW, H0 = VH, start = performance.now();
   // 1) vines curl in from every edge
   const vines = [];
